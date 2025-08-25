@@ -1,0 +1,138 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Sidebar > renders empty state when no chats 1`] = `
+<div
+  class="w-60 border-r shadow-sm pt-5 pb-3 px-2 gap-3 flex flex-col justify-between select-none"
+>
+  <div
+    class="h-full overflow-auto"
+  >
+    <div
+      class="w-full h-full flex items-center justify-center"
+    >
+      <p
+        class="text-[15px] text-gray-500"
+      >
+        No Chats Yet
+      </p>
+    </div>
+  </div>
+  <button
+    class="inline-flex items-center justify-center whitespace-nowrap font-medium disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive shadow-xs hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 h-8 gap-1.5 px-3 has-[>svg]:px-2.5 w-full py-4.5 text-[15px] text-primary rounded-md cursor-pointer border border-primary transition bg-[#a3e636] hover:bg-[#91cc33]"
+    data-slot="button"
+  >
+    New Chat
+  </button>
+</div>
+`;
+
+exports[`Sidebar > renders loading state 1`] = `
+<div
+  class="w-60 border-r shadow-sm pt-5 pb-3 px-2 gap-3 flex flex-col justify-between select-none"
+>
+  <div
+    class="h-full overflow-auto"
+  >
+    <div
+      class="w-full h-full flex items-center justify-center"
+    >
+      <svg
+        aria-hidden="true"
+        class="lucide lucide-loader-circle animate-spin"
+        fill="none"
+        height="24"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+        width="24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M21 12a9 9 0 1 1-6.219-8.56"
+        />
+      </svg>
+    </div>
+  </div>
+  <button
+    class="inline-flex items-center justify-center whitespace-nowrap font-medium disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive shadow-xs hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 h-8 gap-1.5 px-3 has-[>svg]:px-2.5 w-full py-4.5 text-[15px] text-primary rounded-md cursor-pointer border border-primary transition bg-[#a3e636] hover:bg-[#91cc33]"
+    data-slot="button"
+  >
+    New Chat
+  </button>
+</div>
+`;
+
+exports[`Sidebar > renders with active chat selected 1`] = `
+<div
+  class="w-60 border-r shadow-sm pt-5 pb-3 px-2 gap-3 flex flex-col justify-between select-none"
+>
+  <div
+    class="h-full overflow-auto"
+  >
+    <div
+      class="text-primary px-2.5 py-2 rounded-md
+                cursor-pointer hover:bg-accent
+                bg-accent
+                "
+    >
+      <p
+        class="text-[15px] truncate"
+        title="Active Conversation"
+      >
+        Active Conversation
+      </p>
+    </div>
+  </div>
+  <button
+    class="inline-flex items-center justify-center whitespace-nowrap font-medium disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive shadow-xs hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 h-8 gap-1.5 px-3 has-[>svg]:px-2.5 w-full py-4.5 text-[15px] text-primary rounded-md cursor-pointer border border-primary transition bg-[#a3e636] hover:bg-[#91cc33]"
+    data-slot="button"
+  >
+    New Chat
+  </button>
+</div>
+`;
+
+exports[`Sidebar > renders with chat list 1`] = `
+<div
+  class="w-60 border-r shadow-sm pt-5 pb-3 px-2 gap-3 flex flex-col justify-between select-none"
+>
+  <div
+    class="h-full overflow-auto"
+  >
+    <div
+      class="text-primary px-2.5 py-2 rounded-md
+                cursor-pointer hover:bg-accent
+                
+                "
+    >
+      <p
+        class="text-[15px] truncate"
+        title="First Conversation"
+      >
+        First Conversation
+      </p>
+    </div>
+    <div
+      class="text-primary px-2.5 py-2 rounded-md
+                cursor-pointer hover:bg-accent
+                
+                "
+    >
+      <p
+        class="text-[15px] truncate"
+        title="Second Conversation"
+      >
+        Second Conversation
+      </p>
+    </div>
+  </div>
+  <button
+    class="inline-flex items-center justify-center whitespace-nowrap font-medium disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive shadow-xs hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 h-8 gap-1.5 px-3 has-[>svg]:px-2.5 w-full py-4.5 text-[15px] text-primary rounded-md cursor-pointer border border-primary transition bg-[#a3e636] hover:bg-[#91cc33]"
+    data-slot="button"
+  >
+    New Chat
+  </button>
+</div>
+`;
