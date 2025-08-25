@@ -1,6 +1,6 @@
 import { Chat } from "@/components/chat/chat";
 import { Sidebar } from "@/components/sidebar/sidebar";
-import logo from "../public/logo.svg";
+import logo from "./assets/logo.svg?url";
 
 const App = () => {
   return (
