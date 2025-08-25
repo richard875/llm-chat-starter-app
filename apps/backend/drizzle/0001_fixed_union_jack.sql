@@ -1,0 +1,1 @@
+ALTER TABLE "messages" ADD COLUMN "chat_id" varchar(255) NOT NULL;
