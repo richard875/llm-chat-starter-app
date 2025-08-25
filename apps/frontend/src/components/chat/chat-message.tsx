@@ -1,8 +1,7 @@
 import ReactMarkdown from "react-markdown";
-
-import { TypingIndicator } from "@/components/chat/typing-indicator";
 import { cn } from "@/lib/utils";
 import type { Message } from "@/types/chat";
+import { TypingIndicator } from "@/components/chat/typing-indicator";
 
 interface ChatMessageProps {
   message: Message;

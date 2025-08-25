@@ -1,5 +1,4 @@
 import { create } from "zustand";
-
 import type { Message, Chat } from "@/types/chat";
 
 interface MessagesState {
@@ -38,9 +37,7 @@ export const useMessages = create<MessagesState>((set) => ({
   clearMessages: () => set({ messages: [] }),
   setCurrentChatId: (chatId) => set({ currentChatId: chatId }),
   setIsLoadingMsg: (isLoading) => set({ isLoadingMsg: isLoading }),
-  startNewChat: () => {
-    set({ messages: [], currentChatId: null });
-  },
+  startNewChat: () => set({ messages: [], currentChatId: null }),
   fetchChats: async () => {
     set({ isLoadingChats: true });
     try {

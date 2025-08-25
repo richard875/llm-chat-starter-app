@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 
+import { useMessages } from "@/store/messages";
 import { ChatInput } from "@/components/chat/chat-input";
 import { ChatMessage } from "@/components/chat/chat-message";
-import { useMessages } from "@/store/messages";
 
 export const Chat = () => {
   const { messages, currentChatId } = useMessages();

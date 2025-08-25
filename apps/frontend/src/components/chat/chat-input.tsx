@@ -1,15 +1,17 @@
 import { SendHorizonal } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { useMessages } from "@/store/messages";
+
 interface ChatInputProps {
   onTypingChange: (isTyping: boolean) => void;
 }
 
 export const ChatInput = ({ onTypingChange }: ChatInputProps) => {
   const [input, setInput] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
   const {
     messages,
     isLoadingMsg,
@@ -20,7 +22,6 @@ export const ChatInput = ({ onTypingChange }: ChatInputProps) => {
     setIsLoadingMsg,
     refreshChatsAfterNewChat,
   } = useMessages();
-  const inputRef = useRef<HTMLInputElement>(null);
 
   // Focus input when loading state changes to false
   useEffect(() => {
@@ -41,18 +42,10 @@ export const ChatInput = ({ onTypingChange }: ChatInputProps) => {
     setCurrentChatId(chatId);
 
     // Add user message
-    addMessage({
-      role: "user",
-      content: input,
-      chatId,
-    });
+    addMessage({ role: "user", content: input, chatId });
 
     // Add empty assistant message that will be streamed
-    addMessage({
-      role: "assistant",
-      content: "",
-      chatId,
-    });
+    addMessage({ role: "assistant", content: "", chatId });
 
     setInput("");
     setIsLoadingMsg(true);
@@ -60,18 +53,14 @@ export const ChatInput = ({ onTypingChange }: ChatInputProps) => {
     try {
       const response = await fetch("/api/chat", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           chatId,
           messages: [...messages, { role: "user", content: input }],
         }),
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to get response");
-      }
+      if (!response.ok) throw new Error("Failed to get response");
 
       const reader = response.body?.getReader();
       if (!reader) throw new Error("No reader available");
@@ -89,9 +78,7 @@ export const ChatInput = ({ onTypingChange }: ChatInputProps) => {
           if (line.startsWith("data: ")) {
             try {
               const data = JSON.parse(line.slice(6));
-              if (data.content) {
-                updateLastMessage(data.content);
-              }
+              if (data.content) updateLastMessage(data.content);
             } catch (e) {
               console.error("Error parsing SSE data:", e);
             }
@@ -124,7 +111,7 @@ export const ChatInput = ({ onTypingChange }: ChatInputProps) => {
       />
       <Button
         type="submit"
-        className="size-10 rounded-full bg-[#a3e636] border border-primary hover:bg-[#91cc33] cursor-pointer transition"
+        className="size-10 rounded-full border border-primary cursor-pointer transition bg-[#a3e636] hover:bg-[#91cc33]"
         disabled={isLoadingMsg}
       >
         <SendHorizonal className="text-primary" />
