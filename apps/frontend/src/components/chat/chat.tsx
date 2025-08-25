@@ -19,14 +19,14 @@ export const Chat = () => {
   return (
     <div className="flex flex-col h-full">
       <div className="flex-1 overflow-y-auto" ref={scrollAreaRef}>
-        <div className="max-w-screen-md mx-auto py-8 px-4">
-          {messages.length === 0 ? (
-            <div className="flex w-full h-full items-center justify-center">
-              <p className="text-center text-muted-foreground">
-                Start a conversation with the AI assistant.
-              </p>
-            </div>
-          ) : (
+        {messages.length === 0 ? (
+          <div className="w-full h-full pb-10 flex items-center justify-center select-none">
+            <p className="text-2xl font-medium">
+              Start a conversation with the AI assistant.
+            </p>
+          </div>
+        ) : (
+          <div className="max-w-screen-md mx-auto py-8 px-4">
             <div className="space-y-4">
               {messages.map((message, index) => (
                 <ChatMessage
@@ -40,13 +40,13 @@ export const Chat = () => {
                 />
               ))}
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
       <div className="w-full bg-background z-20 px-5">
         <div className="max-w-screen-md mx-auto">
           <ChatInput onTypingChange={setIsTyping} />
-          <p className="text-sm text-center py-2.5 text-muted-foreground">
+          <p className="text-sm text-center py-2.5 text-muted-foreground select-none">
             AI can make mistakes. Please verify the information provided.
           </p>
         </div>
