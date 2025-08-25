@@ -43,9 +43,12 @@ export const Chat = () => {
           )}
         </div>
       </div>
-      <div className="w-full bg-background z-20 p-4 border-t">
+      <div className="w-full bg-background z-20 px-5">
         <div className="max-w-screen-md mx-auto">
           <ChatInput onTypingChange={setIsTyping} />
+          <p className="text-sm text-center py-2.5 text-muted-foreground">
+            AI can make mistakes. Please verify the information provided.
+          </p>
         </div>
       </div>
     </div>

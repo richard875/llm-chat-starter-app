@@ -1,4 +1,4 @@
-import { Send } from "lucide-react";
+import { SendHorizonal } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -94,18 +94,23 @@ export const ChatInput = ({ onTypingChange }: ChatInputProps) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex w-full items-center space-x-3 bg-muted rounded-lg p-4"
+      className="flex w-full items-center space-x-3 rounded-full p-2 border border-primary shadow"
     >
       <Input
         ref={inputRef}
         value={input}
         onChange={(e) => setInput(e.target.value)}
         placeholder="Type your message..."
-        className="flex-1 px-4 py-6 text-base"
+        name="message"
+        className="flex-1 border-0 shadow-none focus-visible:ring-0"
         disabled={isLoading}
       />
-      <Button type="submit" className="size-12" disabled={isLoading}>
-        <Send className="h-4 w-4" />
+      <Button
+        type="submit"
+        className="size-10 rounded-full bg-[#a3e636] border border-primary hover:bg-[#91cc33] cursor-pointer"
+        disabled={isLoading}
+      >
+        <SendHorizonal className="text-primary" />
       </Button>
     </form>
   );
