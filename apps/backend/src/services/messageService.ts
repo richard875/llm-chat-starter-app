@@ -11,15 +11,11 @@ import {
 
 // Save a new message to the database
 export const saveMessage = async (
-  messageData: Omit<NewMessage, "id" | "createdAt" | "updatedAt">
+  data: Omit<NewMessage, "id" | "createdAt" | "updatedAt">
 ): Promise<Message> => {
   const [savedMessage] = await db
     .insert(messages)
-    .values({
-      chatId: messageData.chatId,
-      role: messageData.role,
-      content: messageData.content,
-    })
+    .values({ chatId: data.chatId, role: data.role, content: data.content })
     .returning();
 
   return savedMessage;
@@ -38,14 +34,11 @@ export const getMessagesByChatId = async (
 
 // Create a new chat session
 export const createChat = async (
-  chatData: Omit<NewChat, "createdAt" | "updatedAt">
+  data: Omit<NewChat, "createdAt" | "updatedAt">
 ): Promise<Chat> => {
   const [savedChat] = await db
     .insert(chats)
-    .values({
-      chatId: chatData.chatId,
-      title: chatData.title,
-    })
+    .values({ chatId: data.chatId, title: data.title })
     .returning();
 
   return savedChat;
