@@ -6,11 +6,13 @@ interface MessagesState {
   messages: Message[];
   chats: Chat[];
   currentChatId: string | null;
+  isLoadingMsg: boolean;
   isLoadingChats: boolean;
   addMessage: (message: Message) => void;
   updateLastMessage: (content: string) => void;
   clearMessages: () => void;
   setCurrentChatId: (chatId: string) => void;
+  setIsLoadingMsg: (isLoading: boolean) => void;
   startNewChat: () => void;
   fetchChats: () => Promise<void>;
   loadChatMessages: (chatId: string) => Promise<void>;
@@ -21,6 +23,7 @@ export const useMessages = create<MessagesState>((set) => ({
   messages: [],
   chats: [],
   currentChatId: null,
+  isLoadingMsg: false,
   isLoadingChats: false,
   addMessage: (message) =>
     set((state) => ({ messages: [...state.messages, message] })),
@@ -34,6 +37,7 @@ export const useMessages = create<MessagesState>((set) => ({
     })),
   clearMessages: () => set({ messages: [] }),
   setCurrentChatId: (chatId) => set({ currentChatId: chatId }),
+  setIsLoadingMsg: (isLoading) => set({ isLoadingMsg: isLoading }),
   startNewChat: () => {
     set({ messages: [], currentChatId: null });
   },

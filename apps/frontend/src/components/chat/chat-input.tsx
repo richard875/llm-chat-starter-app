@@ -12,29 +12,30 @@ interface ChatInputProps {
 
 export const ChatInput = ({ onTypingChange }: ChatInputProps) => {
   const [input, setInput] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const {
     messages,
+    isLoadingMsg,
     addMessage,
     updateLastMessage,
     currentChatId,
     setCurrentChatId,
+    setIsLoadingMsg,
     refreshChatsAfterNewChat,
   } = useMessages();
   const inputRef = useRef<HTMLInputElement>(null);
 
   // Focus input when loading state changes to false
   useEffect(() => {
-    if (!isLoading) {
+    if (!isLoadingMsg) {
       inputRef.current?.focus();
     }
-    onTypingChange(isLoading);
-  }, [isLoading, onTypingChange]);
+    onTypingChange(isLoadingMsg);
+  }, [isLoadingMsg, onTypingChange]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!input.trim() || isLoading) return;
+    if (!input.trim() || isLoadingMsg) return;
 
     // Generate a new chat ID if this is the first message in a new chat
     const isNewChat = !currentChatId;
@@ -56,7 +57,7 @@ export const ChatInput = ({ onTypingChange }: ChatInputProps) => {
     });
 
     setInput("");
-    setIsLoading(true);
+    setIsLoadingMsg(true);
 
     try {
       const response = await fetch("/api/chat", {
@@ -103,7 +104,7 @@ export const ChatInput = ({ onTypingChange }: ChatInputProps) => {
       console.error("Error:", error);
       updateLastMessage("Sorry, there was an error processing your request.");
     } finally {
-      setIsLoading(false);
+      setIsLoadingMsg(false);
       // Refresh chats list if this was a new chat
       if (isNewChat) refreshChatsAfterNewChat();
     }
@@ -121,12 +122,12 @@ export const ChatInput = ({ onTypingChange }: ChatInputProps) => {
         placeholder="Type your message..."
         name="message"
         className="flex-1 border-0 shadow-none !text-base focus-visible:ring-0"
-        disabled={isLoading}
+        disabled={isLoadingMsg}
       />
       <Button
         type="submit"
         className="size-10 rounded-full bg-[#a3e636] border border-primary hover:bg-[#91cc33] cursor-pointer"
-        disabled={isLoading}
+        disabled={isLoadingMsg}
       >
         <SendHorizonal className="text-primary" />
       </Button>
