@@ -5,7 +5,7 @@ import { ChatMessage } from "@/components/chat/chat-message";
 import { useMessages } from "@/store/messages";
 
 export const Chat = () => {
-  const { messages } = useMessages();
+  const { messages, currentChatId } = useMessages();
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const [isTyping, setIsTyping] = useState(false);
 
@@ -15,6 +15,13 @@ export const Chat = () => {
       scrollAreaRef.current.scrollTop = scrollAreaRef.current.scrollHeight;
     }
   }, [messages, isTyping]);
+
+  // Scroll to top when switching chats
+  useEffect(() => {
+    if (scrollAreaRef.current) {
+      scrollAreaRef.current.scrollTop = 0;
+    }
+  }, [currentChatId]);
 
   return (
     <div className="flex-1 flex flex-col h-full">
