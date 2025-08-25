@@ -1,0 +1,71 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ChatMessage > renders assistant message correctly 1`] = `
+<div
+  class="flex mb-7 last:mb-0 justify-start"
+>
+  <div
+    class="min-w-0 max-w-full text-foreground"
+  >
+    <div
+      class="leading-6.25 text-[15px] tracking-wide min-w-0 w-full"
+    >
+      <div
+        data-testid="markdown"
+      >
+        I am doing well, thank you for asking!
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ChatMessage > renders assistant message with typing indicator 1`] = `
+<div
+  class="flex mb-7 last:mb-0 justify-start"
+>
+  <div
+    class="min-w-0 max-w-full text-foreground"
+  >
+    <div
+      class="leading-6.25 text-[15px] tracking-wide min-w-0 w-full"
+    >
+      <div
+        data-testid="markdown"
+      >
+        I am doing well, thank you for asking!
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ChatMessage > renders message with empty content 1`] = `
+<div
+  class="flex mb-7 last:mb-0 justify-end"
+>
+  <div
+    class="min-w-0 max-w-full bg-primary text-primary-foreground px-4 py-2 rounded-[20px]"
+  />
+</div>
+`;
+
+exports[`ChatMessage > renders user message correctly 1`] = `
+<div
+  class="flex mb-7 last:mb-0 justify-end"
+>
+  <div
+    class="min-w-0 max-w-full bg-primary text-primary-foreground px-4 py-2 rounded-[20px]"
+  >
+    <div
+      class="leading-6.25 text-[15px] tracking-wide min-w-0 w-full"
+    >
+      <div
+        data-testid="markdown"
+      >
+        Hello, how are you?
+      </div>
+    </div>
+  </div>
+</div>
+`;
