@@ -1,12 +1,13 @@
-import { zValidator } from "@hono/zod-validator";
 import "dotenv/config";
+import { z } from "zod";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { streamSSE } from "hono/streaming";
+import { zValidator } from "@hono/zod-validator";
+
 import { openai } from "./services/openai.js";
-import { z } from "zod";
-import * as MessageService from "./services/messageService.js";
 import { generateTitle } from "./services/titleService.js";
+import * as MessageService from "./services/messageService.js";
 
 // Create Hono app
 export const app = new Hono();
@@ -15,20 +16,7 @@ export const app = new Hono();
 app.use(cors());
 
 // Routes
-app.get("/", (c) => {
-  return c.json({ message: "LLM API is running" });
-});
-
-// Get all messages from database
-app.get("/api/messages", async (c) => {
-  try {
-    const messages = await MessageService.getAllMessages();
-    return c.json({ messages });
-  } catch (error) {
-    console.error("Error fetching messages:", error);
-    return c.json({ error: "Failed to fetch messages" }, 500);
-  }
-});
+app.get("/", (c) => c.json({ message: "LLM API is running" }));
 
 // Get messages for a specific chat
 app.get("/api/messages/:chatId", async (c) => {
@@ -42,29 +30,6 @@ app.get("/api/messages/:chatId", async (c) => {
   }
 });
 
-// Clear all messages
-app.delete("/api/messages", async (c) => {
-  try {
-    await MessageService.clearAllMessages();
-    return c.json({ message: "All messages cleared" });
-  } catch (error) {
-    console.error("Error clearing messages:", error);
-    return c.json({ error: "Failed to clear messages" }, 500);
-  }
-});
-
-// Clear messages for a specific chat
-app.delete("/api/messages/:chatId", async (c) => {
-  try {
-    const chatId = c.req.param("chatId");
-    await MessageService.clearChatMessages(chatId);
-    return c.json({ message: `Messages for chat ${chatId} cleared` });
-  } catch (error) {
-    console.error("Error clearing chat messages:", error);
-    return c.json({ error: "Failed to clear chat messages" }, 500);
-  }
-});
-
 // Get all chats
 app.get("/api/chats", async (c) => {
   try {
@@ -73,30 +38,6 @@ app.get("/api/chats", async (c) => {
   } catch (error) {
     console.error("Error fetching chats:", error);
     return c.json({ error: "Failed to fetch chats" }, 500);
-  }
-});
-
-// Get a specific chat
-app.get("/api/chats/:chatId", async (c) => {
-  try {
-    const chatId = c.req.param("chatId");
-    const chat = await MessageService.getChatById(chatId);
-    return !chat ? c.json({ error: "Chat not found" }, 404) : c.json({ chat });
-  } catch (error) {
-    console.error("Error fetching chat:", error);
-    return c.json({ error: "Failed to fetch chat" }, 500);
-  }
-});
-
-// Delete a chat and all its messages
-app.delete("/api/chats/:chatId", async (c) => {
-  try {
-    const chatId = c.req.param("chatId");
-    await MessageService.deleteChat(chatId);
-    return c.json({ message: `Chat ${chatId} deleted` });
-  } catch (error) {
-    console.error("Error deleting chat:", error);
-    return c.json({ error: "Failed to delete chat" }, 500);
   }
 });
 
@@ -118,16 +59,14 @@ app.post(
   async (c) => {
     try {
       const { chatId, messages } = c.req.valid("json");
-      if (!messages?.length) {
-        return c.json({ error: "Messages are required" }, 400);
-      }
+      if (!messages?.length) c.json({ error: "Messages are required" }, 400);
 
       // Save the user's message to the database
       const userMessage = messages[messages.length - 1];
       if (userMessage.role === "user") {
         await MessageService.saveMessage({
           chatId,
-          role: userMessage.role,
+          role: "user",
           content: userMessage.content,
         });
       }
@@ -145,16 +84,14 @@ app.post(
           const content = chunk.choices[0]?.delta?.content || "";
           if (content) {
             assistantResponse += content;
-            await stream.writeSSE({
-              data: JSON.stringify({ content }),
-            });
+            await stream.writeSSE({ data: JSON.stringify({ content }) });
           }
         }
 
         // After streaming is complete, save the assistant's response to the database
         if (assistantResponse) {
           await MessageService.saveMessage({
-            chatId: chatId,
+            chatId,
             role: "assistant",
             content: assistantResponse,
           });

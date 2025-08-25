@@ -140,7 +140,6 @@ Added a `chatId` field to the database and application to enable chat session ma
 - Updated `saveMessage()` to require `chatId`
 - Added `getMessagesByChatId()` method
 - Added `clearChatMessages()` method
-- Added `getRecentMessagesByChatId()` method
 
 ## Frontend Changes
 

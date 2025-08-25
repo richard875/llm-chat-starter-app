@@ -25,11 +25,6 @@ export const saveMessage = async (
   return savedMessage;
 };
 
-// Get all messages from the database
-export const getAllMessages = async (): Promise<Message[]> => {
-  return await db.select().from(messages).orderBy(messages.createdAt);
-};
-
 // Get messages by chatId
 export const getMessagesByChatId = async (
   chatId: string
@@ -39,51 +34,6 @@ export const getMessagesByChatId = async (
     .from(messages)
     .where(eq(messages.chatId, chatId))
     .orderBy(messages.createdAt);
-};
-
-// Get messages by role
-export const getMessagesByRole = async (
-  role: "user" | "assistant"
-): Promise<Message[]> => {
-  return await db
-    .select()
-    .from(messages)
-    .where(eq(messages.role, role))
-    .orderBy(messages.createdAt);
-};
-
-// Delete all messages
-export const clearAllMessages = async (): Promise<void> => {
-  await db.delete(messages);
-};
-
-// Clear messages for a specific chat
-export const clearChatMessages = async (chatId: string): Promise<void> => {
-  await db.delete(messages).where(eq(messages.chatId, chatId));
-};
-
-// Get the last N messages
-export const getRecentMessages = async (
-  limit: number = 50
-): Promise<Message[]> => {
-  return await db
-    .select()
-    .from(messages)
-    .orderBy(messages.createdAt)
-    .limit(limit);
-};
-
-// Get the last N messages for a specific chat
-export const getRecentMessagesByChatId = async (
-  chatId: string,
-  limit: number = 50
-): Promise<Message[]> => {
-  return await db
-    .select()
-    .from(messages)
-    .where(eq(messages.chatId, chatId))
-    .orderBy(messages.createdAt)
-    .limit(limit);
 };
 
 // Create a new chat session
@@ -112,35 +62,7 @@ export const chatExists = async (chatId: string): Promise<boolean> => {
   return chat.length > 0;
 };
 
-// Get chat by ID
-export const getChatById = async (chatId: string): Promise<Chat | null> => {
-  const [chat] = await db
-    .select()
-    .from(chats)
-    .where(eq(chats.chatId, chatId))
-    .limit(1);
-
-  return chat || null;
-};
-
 // Get all chats
 export const getAllChats = async (): Promise<Chat[]> => {
   return await db.select().from(chats).orderBy(desc(chats.createdAt));
-};
-
-// Update chat title
-export const updateChatTitle = async (
-  chatId: string,
-  title: string
-): Promise<void> => {
-  await db
-    .update(chats)
-    .set({ title, updatedAt: new Date() })
-    .where(eq(chats.chatId, chatId));
-};
-
-// Delete a chat and all its messages
-export const deleteChat = async (chatId: string): Promise<void> => {
-  await db.delete(messages).where(eq(messages.chatId, chatId));
-  await db.delete(chats).where(eq(chats.chatId, chatId));
 };

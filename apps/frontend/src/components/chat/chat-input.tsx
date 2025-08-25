@@ -98,7 +98,7 @@ export const ChatInput = ({ onTypingChange }: ChatInputProps) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex w-full items-center space-x-3 rounded-full p-2 border border-primary shadow"
+      className="flex w-full items-center rounded-full p-2 border border-primary shadow"
     >
       <Input
         ref={inputRef}
