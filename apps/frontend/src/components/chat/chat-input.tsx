@@ -1,3 +1,4 @@
+import { useQueryState } from "nuqs";
 import { SendHorizonal } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
@@ -11,6 +12,7 @@ interface ChatInputProps {
 
 export const ChatInput = ({ onTypingChange }: ChatInputProps) => {
   const [input, setInput] = useState("");
+  const [, setChatId] = useQueryState("chatId");
   const inputRef = useRef<HTMLInputElement>(null);
   const {
     messages,
@@ -40,6 +42,9 @@ export const ChatInput = ({ onTypingChange }: ChatInputProps) => {
     const isNewChat = !currentChatId;
     const chatId = isNewChat ? crypto.randomUUID() : currentChatId;
     setCurrentChatId(chatId);
+
+    // Update URL with the chat ID if it's a new chat
+    if (isNewChat) setChatId(chatId);
 
     // Add user message
     addMessage({ role: "user", content: input, chatId });

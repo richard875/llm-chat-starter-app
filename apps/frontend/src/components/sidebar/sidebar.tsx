@@ -1,9 +1,11 @@
 import { useEffect } from "react";
+import { useQueryState } from "nuqs";
 import { LoaderCircle } from "lucide-react";
 import { useMessages } from "@/store/messages";
 import { Button } from "@/components/ui/button";
 
 export const Sidebar = () => {
+  const [chatId, setChatId] = useQueryState("chatId");
   const {
     chats,
     currentChatId,
@@ -15,8 +17,25 @@ export const Sidebar = () => {
   } = useMessages();
 
   useEffect(() => {
+    if (chatId) loadChatMessages(chatId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
     fetchChats();
   }, [fetchChats]);
+
+  const handleSelectChat = (chatId: string) => {
+    if (isLoadingMsg || currentChatId === chatId) return;
+
+    setChatId(chatId);
+    loadChatMessages(chatId);
+  };
+
+  const handleNewChat = () => {
+    setChatId(null);
+    startNewChat();
+  };
 
   return (
     <div className="w-60 border-r shadow-sm pt-5 pb-3 px-2 gap-3 flex flex-col justify-between select-none">
@@ -33,11 +52,7 @@ export const Sidebar = () => {
                 ${currentChatId === chat.chatId ? "bg-accent" : ""}
                 `}
               key={chat.chatId}
-              onClick={() =>
-                !isLoadingMsg &&
-                currentChatId !== chat.chatId &&
-                loadChatMessages(chat.chatId)
-              }
+              onClick={() => handleSelectChat(chat.chatId)}
             >
               <p className="text-[15px] truncate" title={chat.title}>
                 {chat.title}
@@ -52,7 +67,7 @@ export const Sidebar = () => {
       </div>
       <Button
         disabled={isLoadingMsg}
-        onClick={startNewChat}
+        onClick={handleNewChat}
         variant="outline"
         size="sm"
         className="w-full py-4.5 text-[15px] text-primary rounded-md cursor-pointer border border-primary transition bg-[#a3e636] hover:bg-[#91cc33]"
