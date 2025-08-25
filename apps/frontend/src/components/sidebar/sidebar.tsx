@@ -33,7 +33,11 @@ export const Sidebar = () => {
                 ${currentChatId === chat.chatId ? "bg-accent" : ""}
                 `}
               key={chat.chatId}
-              onClick={() => !isLoadingMsg && loadChatMessages(chat.chatId)}
+              onClick={() =>
+                !isLoadingMsg &&
+                currentChatId !== chat.chatId &&
+                loadChatMessages(chat.chatId)
+              }
             >
               <p className="text-[15px] truncate" title={chat.title}>
                 {chat.title}

@@ -106,7 +106,7 @@ export const ChatInput = ({ onTypingChange }: ChatInputProps) => {
         onChange={(e) => setInput(e.target.value)}
         placeholder="Type your message..."
         name="message"
-        className="flex-1 border-0 shadow-none !text-base focus-visible:ring-0"
+        className="flex-1 border-0 shadow-none !text-base focus-visible:ring-0 select-none"
         disabled={isLoadingMsg}
       />
       <Button
