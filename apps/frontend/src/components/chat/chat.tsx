@@ -54,7 +54,10 @@ export const Chat = () => {
         <div className="max-w-screen-md mx-auto">
           <ChatInput onTypingChange={setIsTyping} />
           <p className="text-sm text-center py-2.5 text-muted-foreground select-none">
-            AI can make mistakes. Please verify the information provided.
+            <span className="hidden md:inline-block">
+              AI can make mistakes.&nbsp;
+            </span>
+            Please verify the information provided.
           </p>
         </div>
       </div>
