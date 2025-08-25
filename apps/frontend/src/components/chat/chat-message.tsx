@@ -16,14 +16,16 @@ export const ChatMessage = ({ message, isTyping }: ChatMessageProps) => {
     <div className={cn("flex mb-4", isUser ? "justify-end" : "justify-start")}>
       <div
         className={cn(
-          "rounded-lg p-3",
+          "px-5 py-3 rounded-4xl",
           isUser
             ? "bg-primary text-primary-foreground"
-            : "bg-muted text-foreground"
+            : "text-foreground border-primary border-1"
         )}
       >
         {message.content ? (
-          <ReactMarkdown>{message.content}</ReactMarkdown>
+          <div className="leading-6 text-base tracking-wide">
+            <ReactMarkdown>{message.content}</ReactMarkdown>
+          </div>
         ) : isTyping ? (
           <TypingIndicator />
         ) : null}
