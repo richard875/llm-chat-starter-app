@@ -8,6 +8,11 @@ import {
   type Chat,
   type NewChat,
 } from "../db/schema.js";
+import {
+  getMessageThread,
+  setMessageThread,
+  invalidateMessageThread,
+} from "./cacheService.js";
 
 // Save a new message to the database
 export const saveMessage = async (
@@ -18,6 +23,9 @@ export const saveMessage = async (
     .values({ chatId: data.chatId, role: data.role, content: data.content })
     .returning();
 
+  // Invalidate cache for this chat thread since we added a new message
+  await invalidateMessageThread(data.chatId);
+
   return savedMessage;
 };
 
@@ -25,11 +33,21 @@ export const saveMessage = async (
 export const getMessagesByChatId = async (
   chatId: string
 ): Promise<Message[]> => {
-  return await db
+  // Try to get from cache first
+  const cachedMessages = await getMessageThread(chatId);
+  if (cachedMessages) return cachedMessages;
+
+  // Cache miss - fetch from database
+  const dbMessages = await db
     .select()
     .from(messages)
     .where(eq(messages.chatId, chatId))
     .orderBy(messages.createdAt);
+
+  // Cache the result for future requests
+  if (dbMessages.length > 0) await setMessageThread(chatId, dbMessages);
+
+  return dbMessages;
 };
 
 // Create a new chat session
