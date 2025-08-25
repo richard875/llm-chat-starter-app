@@ -26,8 +26,8 @@ export const Chat = () => {
             </p>
           </div>
         ) : (
-          <div className="max-w-screen-md mx-auto py-8 px-4">
-            <div className="space-y-4">
+          <div className="w-full bg-background z-20 px-5 py-8">
+            <div className="max-w-screen-md mx-auto space-y-4">
               {messages.map((message, index) => (
                 <ChatMessage
                   key={index}
