@@ -7,6 +7,7 @@ export const Sidebar = () => {
   const {
     chats,
     currentChatId,
+    isLoadingMsg,
     isLoadingChats,
     startNewChat,
     fetchChats,
@@ -27,11 +28,12 @@ export const Sidebar = () => {
         ) : chats.length > 0 ? (
           chats.map((chat) => (
             <div
-              className={`text-primary px-2.5 py-2 rounded-md cursor-pointer hover:bg-accent ${
-                currentChatId === chat.chatId ? "bg-accent" : ""
-              }`}
+              className={`text-primary px-2.5 py-2 rounded-md
+                ${isLoadingMsg ? "" : "cursor-pointer hover:bg-accent"}
+                ${currentChatId === chat.chatId ? "bg-accent" : ""}
+                `}
               key={chat.chatId}
-              onClick={() => loadChatMessages(chat.chatId)}
+              onClick={() => !isLoadingMsg && loadChatMessages(chat.chatId)}
             >
               <p className="text-[15px] truncate" title={chat.title}>
                 {chat.title}
@@ -45,10 +47,11 @@ export const Sidebar = () => {
         )}
       </div>
       <Button
+        disabled={isLoadingMsg}
         onClick={startNewChat}
         variant="outline"
         size="sm"
-        className="w-full py-4.5 text-[15px] text-primary rounded-md cursor-pointer border border-primary bg-[#a3e636] hover:bg-[#91cc33]"
+        className="w-full py-4.5 text-[15px] text-primary rounded-md cursor-pointer border border-primary transition bg-[#a3e636] hover:bg-[#91cc33]"
       >
         New Chat
       </Button>

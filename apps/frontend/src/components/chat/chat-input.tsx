@@ -126,7 +126,7 @@ export const ChatInput = ({ onTypingChange }: ChatInputProps) => {
       />
       <Button
         type="submit"
-        className="size-10 rounded-full bg-[#a3e636] border border-primary hover:bg-[#91cc33] cursor-pointer"
+        className="size-10 rounded-full bg-[#a3e636] border border-primary hover:bg-[#91cc33] cursor-pointer transition"
         disabled={isLoadingMsg}
       >
         <SendHorizonal className="text-primary" />
