@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { eq, desc } from "drizzle-orm";
 import { db } from "../db/config.js";
 import {
   messages,
@@ -125,7 +125,7 @@ export const getChatById = async (chatId: string): Promise<Chat | null> => {
 
 // Get all chats
 export const getAllChats = async (): Promise<Chat[]> => {
-  return await db.select().from(chats).orderBy(chats.createdAt);
+  return await db.select().from(chats).orderBy(desc(chats.createdAt));
 };
 
 // Update chat title
