@@ -17,7 +17,7 @@ export const Chat = () => {
   }, [messages, isTyping]);
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex-1 flex flex-col h-full">
       <div className="flex-1 overflow-y-auto" ref={scrollAreaRef}>
         {messages.length === 0 ? (
           <div className="w-full h-full pb-10 flex items-center justify-center select-none">
@@ -27,7 +27,7 @@ export const Chat = () => {
           </div>
         ) : (
           <div className="w-full bg-background z-20 px-5 py-8">
-            <div className="max-w-screen-md mx-auto space-y-4">
+            <div className="max-w-screen-md mx-auto">
               {messages.map((message, index) => (
                 <ChatMessage
                   key={index}
