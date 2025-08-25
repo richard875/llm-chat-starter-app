@@ -11,8 +11,8 @@ const App = () => {
         </p>
         <div className="w-33"></div>
       </header>
-      <div className="h-3 bg-[url('/wave.svg')] bg-left-top bg-auto"></div>
-      <main className="flex-1 min-h-0">
+      <div className="h-3 bg-[url('/wave.svg')] bg-left-top bg-auto z-20"></div>
+      <main className="flex-1 min-h-0 -mt-3">
         <Chat />
       </main>
     </div>
