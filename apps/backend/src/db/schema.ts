@@ -3,7 +3,7 @@ import { pgTable, text, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
 // Messages Table Schema
 export const messages = pgTable("messages", {
   id: uuid("id").defaultRandom().primaryKey(),
-  chatId: varchar("chat_id", { length: 255 }).notNull(),
+  chatId: uuid("chat_id").notNull(),
   role: varchar("role", { length: 20 }).notNull().$type<"user" | "assistant">(),
   content: text("content").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
@@ -12,7 +12,7 @@ export const messages = pgTable("messages", {
 
 // Chats Table Schema
 export const chats = pgTable("chats", {
-  chatId: varchar("chat_id", { length: 255 }).primaryKey(),
+  chatId: uuid("chat_id").primaryKey(),
   title: text("title").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
