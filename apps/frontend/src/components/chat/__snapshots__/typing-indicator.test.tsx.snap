@@ -1,0 +1,17 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`TypingIndicator > renders typing indicator with animated dots 1`] = `
+<div
+  class="flex items-center space-x-1 px-2 py-1"
+>
+  <div
+    class="h-2 w-2 animate-pulse rounded-full bg-primary [animation-delay:-0.3s]"
+  />
+  <div
+    class="h-2 w-2 animate-pulse rounded-full bg-primary [animation-delay:-0.15s]"
+  />
+  <div
+    class="h-2 w-2 animate-pulse rounded-full bg-primary"
+  />
+</div>
+`;
