@@ -9,7 +9,8 @@
     "dev": "concurrently -n frontend,backend \"yarn workspace frontend dev\" \"yarn workspace backend dev\"",
     "build": "yarn workspace frontend build && yarn workspace backend build",
     "start": "yarn workspace backend start",
-    "test": "yarn workspace backend test"
+    "test": "yarn workspace backend test",
+    "type": "yarn workspace frontend type && yarn workspace backend type"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",
