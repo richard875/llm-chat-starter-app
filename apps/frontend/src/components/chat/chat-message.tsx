@@ -13,10 +13,10 @@ export const ChatMessage = ({ message, isTyping }: ChatMessageProps) => {
   const isUser = message.role === "user";
 
   return (
-    <div className={cn("flex mb-4", isUser ? "justify-end" : "justify-start")}>
+    <div className={cn("flex mb-5", isUser ? "justify-end" : "justify-start")}>
       <div
         className={cn(
-          "px-5 py-3 rounded-4xl",
+          "px-5 py-3 rounded-3xl",
           isUser
             ? "bg-primary text-primary-foreground"
             : "text-foreground border-primary border-1"
