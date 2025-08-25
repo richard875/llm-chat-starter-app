@@ -18,8 +18,8 @@ export const Sidebar = () => {
   }, [fetchChats]);
 
   return (
-    <div className="w-60 border-r shadow-sm pt-5 pb-3 p-2 flex flex-col justify-between select-none">
-      <div className="h-full">
+    <div className="w-60 border-r shadow-sm pt-5 pb-3 p-2 gap-3 flex flex-col justify-between select-none">
+      <div className="h-full overflow-auto">
         {isLoadingChats ? (
           <div className="w-full h-full flex items-center justify-center">
             <LoaderCircle className="animate-spin" />
