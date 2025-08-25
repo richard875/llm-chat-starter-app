@@ -42,17 +42,6 @@ app.get("/api/messages/:chatId", async (c) => {
   }
 });
 
-// Generate a new chat ID
-app.post("/api/chat/new", async (c) => {
-  try {
-    const chatId = MessageService.generateChatId();
-    return c.json({ chatId });
-  } catch (error) {
-    console.error("Error generating chat ID:", error);
-    return c.json({ error: "Failed to generate chat ID" }, 500);
-  }
-});
-
 // Clear all messages
 app.delete("/api/messages", async (c) => {
   try {
@@ -117,7 +106,7 @@ app.post(
   zValidator(
     "json",
     z.object({
-      chatId: z.string().optional(),
+      chatId: z.string(),
       messages: z.array(
         z.object({
           role: z.enum(["user", "assistant"]),
@@ -128,13 +117,10 @@ app.post(
   ),
   async (c) => {
     try {
-      const { chatId: providedChatId, messages } = c.req.valid("json");
+      const { chatId, messages } = c.req.valid("json");
       if (!messages?.length) {
         return c.json({ error: "Messages are required" }, 400);
       }
-
-      // Generate a new chatId if not provided
-      const chatId = providedChatId || MessageService.generateChatId();
 
       // Save the user's message to the database
       const userMessage = messages[messages.length - 1];

@@ -141,7 +141,6 @@ Added a `chatId` field to the database and application to enable chat session ma
 - Added `getMessagesByChatId()` method
 - Added `clearChatMessages()` method
 - Added `getRecentMessagesByChatId()` method
-- Added `generateChatId()` static method
 
 ## Frontend Changes
 

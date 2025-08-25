@@ -86,11 +86,6 @@ export const getRecentMessagesByChatId = async (
     .limit(limit);
 };
 
-// Generate a new unique chat ID
-export const generateChatId = (): string => {
-  return `chat_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`;
-};
-
 // Create a new chat session
 export const createChat = async (
   chatData: Omit<NewChat, "createdAt" | "updatedAt">
