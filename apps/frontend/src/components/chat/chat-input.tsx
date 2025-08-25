@@ -4,8 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useMessages } from "@/store/messages";
-import { generateChatId } from "@/lib/utils";
-
 interface ChatInputProps {
   onTypingChange: (isTyping: boolean) => void;
 }
@@ -39,7 +37,7 @@ export const ChatInput = ({ onTypingChange }: ChatInputProps) => {
 
     // Generate a new chat ID if this is the first message in a new chat
     const isNewChat = !currentChatId;
-    const chatId = isNewChat ? generateChatId() : currentChatId;
+    const chatId = isNewChat ? crypto.randomUUID() : currentChatId;
     setCurrentChatId(chatId);
 
     // Add user message
