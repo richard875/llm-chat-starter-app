@@ -20,14 +20,15 @@ export const ChatMessage = ({ message, isTyping }: ChatMessageProps) => {
       )}
     >
       <div
-        className={
+        className={cn(
+          "min-w-0 max-w-full",
           isUser
             ? "bg-primary text-primary-foreground px-4 py-2 rounded-[20px]"
             : "text-foreground"
-        }
+        )}
       >
         {message.content ? (
-          <div className="leading-6.25 text-[15px] tracking-wide">
+          <div className="leading-6.25 text-[15px] tracking-wide min-w-0 w-full">
             <ReactMarkdown
               components={{
                 p: ({ children }) => (
@@ -71,7 +72,7 @@ export const ChatMessage = ({ message, isTyping }: ChatMessageProps) => {
                   </code>
                 ),
                 pre: ({ children }) => (
-                  <pre className="bg-muted p-3 rounded-md mb-4 overflow-x-auto">
+                  <pre className="bg-muted p-3 rounded-md mb-4 overflow-x-auto min-w-0 w-full">
                     {children}
                   </pre>
                 ),
