@@ -14,10 +14,10 @@ import { OpenAI } from "openai";
 const mocks = vi.hoisted(() => {
   return {
     create: vi.fn(),
-  }
-})
+  };
+});
 
-vi.mock('openai', () => ({
+vi.mock("openai", () => ({
   OpenAI: vi.fn().mockImplementation(() => ({
     chat: {
       completions: {
@@ -154,6 +154,41 @@ describe("Backend API Tests", () => {
       expect(res.status).toBe(500);
       const data = await res.json();
       expect(data).toEqual({ error: "Failed to process request" });
+    });
+
+    it("should handle chatId correctly", async () => {
+      const testChatId = "test-chat-123";
+
+      const res = await app.request("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chatId: testChatId,
+          messages: [{ role: "user", content: "Hello with chatId" }],
+        }),
+      });
+
+      expect(res.status).toBe(200);
+      expect(mocks.create).toHaveBeenCalledWith({
+        model: "gpt-4o-mini",
+        messages: [{ role: "user", content: "Hello with chatId" }],
+        temperature: 0.7,
+        stream: true,
+      });
+    });
+  });
+
+  describe("Chat ID Generation", () => {
+    it("should generate a new chat ID", async () => {
+      const res = await app.request("/api/chat/new", {
+        method: "POST",
+      });
+
+      expect(res.status).toBe(200);
+      const data = (await res.json()) as { chatId: string };
+      expect(data).toHaveProperty("chatId");
+      expect(typeof data.chatId).toBe("string");
+      expect(data.chatId).toMatch(/^chat_\d+_[a-z0-9]{9}$/);
     });
   });
 });
