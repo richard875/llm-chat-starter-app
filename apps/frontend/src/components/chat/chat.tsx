@@ -1,8 +1,16 @@
 import { useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 import { useMessages } from "@/store/messages";
 import { ChatInput } from "@/components/chat/chat-input";
 import { ChatMessage } from "@/components/chat/chat-message";
+
+const motionConfig = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  exit: { opacity: 0 },
+  transition: { duration: 0.1 },
+};
 
 export const Chat = () => {
   const { messages, currentChatId } = useMessages();
@@ -26,29 +34,46 @@ export const Chat = () => {
   return (
     <div className="flex-1 flex flex-col h-full">
       <div className="flex-1 overflow-y-auto" ref={scrollAreaRef}>
-        {messages.length === 0 ? (
-          <div className="w-full h-full pb-10 flex items-center justify-center select-none">
-            <p className="text-2xl font-medium">
-              Start a conversation with the AI assistant.
-            </p>
-          </div>
-        ) : (
-          <div className="w-full bg-background z-20 px-5 py-8">
-            <div className="max-w-screen-md mx-auto">
-              {messages.map((message, index) => (
-                <ChatMessage
-                  key={index}
-                  message={message}
-                  isTyping={
-                    isTyping &&
-                    index === messages.length - 1 &&
-                    message.role === "assistant"
-                  }
-                />
-              ))}
-            </div>
-          </div>
-        )}
+        <AnimatePresence mode="wait">
+          {messages.length === 0 ? (
+            <motion.div
+              key="empty-state"
+              {...motionConfig}
+              className="w-full h-full pb-10 flex items-center justify-center select-none"
+            >
+              <p className="text-2xl font-medium">
+                Start a conversation with the AI assistant.
+              </p>
+            </motion.div>
+          ) : (
+            <motion.div
+              key="messages-container"
+              {...motionConfig}
+              className="w-full bg-background z-20 px-5 py-8"
+            >
+              <div className="max-w-screen-md mx-auto">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={currentChatId || "new-chat"}
+                    {...motionConfig}
+                  >
+                    {messages.map((message, index) => (
+                      <ChatMessage
+                        key={index}
+                        message={message}
+                        isTyping={
+                          isTyping &&
+                          index === messages.length - 1 &&
+                          message.role === "assistant"
+                        }
+                      />
+                    ))}
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
       <div className="w-full bg-background z-20 px-5">
         <div className="max-w-screen-md mx-auto">
