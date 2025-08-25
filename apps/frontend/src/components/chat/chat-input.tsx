@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useMessages } from "@/store/messages";
+import { generateChatId } from "@/lib/utils";
 
 interface ChatInputProps {
   onTypingChange: (isTyping: boolean) => void;
@@ -12,7 +13,14 @@ interface ChatInputProps {
 export const ChatInput = ({ onTypingChange }: ChatInputProps) => {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const { messages, addMessage, updateLastMessage } = useMessages();
+  const {
+    messages,
+    addMessage,
+    updateLastMessage,
+    currentChatId,
+    setCurrentChatId,
+    refreshChatsAfterNewChat,
+  } = useMessages();
   const inputRef = useRef<HTMLInputElement>(null);
 
   // Focus input when loading state changes to false
@@ -28,16 +36,23 @@ export const ChatInput = ({ onTypingChange }: ChatInputProps) => {
 
     if (!input.trim() || isLoading) return;
 
+    // Generate a new chat ID if this is the first message in a new chat
+    const isNewChat = !currentChatId;
+    const chatId = isNewChat ? generateChatId() : currentChatId;
+    setCurrentChatId(chatId);
+
     // Add user message
     addMessage({
       role: "user",
       content: input,
+      chatId,
     });
 
     // Add empty assistant message that will be streamed
     addMessage({
       role: "assistant",
       content: "",
+      chatId,
     });
 
     setInput("");
@@ -50,6 +65,7 @@ export const ChatInput = ({ onTypingChange }: ChatInputProps) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          chatId,
           messages: [...messages, { role: "user", content: input }],
         }),
       });
@@ -88,6 +104,8 @@ export const ChatInput = ({ onTypingChange }: ChatInputProps) => {
       updateLastMessage("Sorry, there was an error processing your request.");
     } finally {
       setIsLoading(false);
+      // Refresh chats list if this was a new chat
+      if (isNewChat) refreshChatsAfterNewChat();
     }
   };
 
@@ -102,7 +120,7 @@ export const ChatInput = ({ onTypingChange }: ChatInputProps) => {
         onChange={(e) => setInput(e.target.value)}
         placeholder="Type your message..."
         name="message"
-        className="flex-1 border-0 shadow-none focus-visible:ring-0"
+        className="flex-1 border-0 shadow-none !text-base focus-visible:ring-0"
         disabled={isLoading}
       />
       <Button
