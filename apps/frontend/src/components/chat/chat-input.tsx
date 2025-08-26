@@ -56,14 +56,17 @@ export const ChatInput = ({ onTypingChange }: ChatInputProps) => {
     setIsLoadingMsg(true);
 
     try {
-      const response = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          chatId,
-          messages: [...messages, { role: "user", content: input }],
-        }),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_API_URL}/api/chat`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            chatId,
+            messages: [...messages, { role: "user", content: input }],
+          }),
+        }
+      );
 
       if (!response.ok) throw new Error("Failed to get response");
 

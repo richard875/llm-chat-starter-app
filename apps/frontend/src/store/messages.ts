@@ -41,7 +41,9 @@ export const useMessages = create<MessagesState>((set) => ({
   fetchChats: async () => {
     set({ isLoadingChats: true });
     try {
-      const response = await fetch("/api/chats");
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_API_URL}/api/chats`
+      );
       if (response.ok) {
         const data = await response.json();
         set({ chats: data.chats, isLoadingChats: false });
@@ -56,7 +58,9 @@ export const useMessages = create<MessagesState>((set) => ({
   },
   loadChatMessages: async (chatId: string) => {
     try {
-      const response = await fetch(`/api/messages/${chatId}`);
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_API_URL}/api/messages/${chatId}`
+      );
       if (response.ok) {
         const data = await response.json();
         set({ messages: data.messages, currentChatId: chatId });
@@ -69,7 +73,9 @@ export const useMessages = create<MessagesState>((set) => ({
   },
   refreshChatsAfterNewChat: async () => {
     try {
-      const response = await fetch("/api/chats");
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_API_URL}/api/chats`
+      );
       if (response.ok) {
         const data = await response.json();
         set({ chats: data.chats });
