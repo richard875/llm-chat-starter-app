@@ -57,7 +57,7 @@ export const ChatInput = ({ onTypingChange }: ChatInputProps) => {
 
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_API_URL}/api/chat`,
+        `https://llm-chat-starter-app.onrender.com/api/chat`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
