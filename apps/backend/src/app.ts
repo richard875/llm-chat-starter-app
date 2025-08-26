@@ -13,19 +13,15 @@ import * as MessageService from "./services/messageService.js";
 export const app = new Hono();
 
 // Middleware
-const allowedOrigins = [
-  process.env.FRONTEND_URL || "https://brainfish.richardeverley.com",
-  "http://localhost:5173",
-  "http://localhost:3000",
-  "https://llm-chat-starter-app.onrender.com",
-].filter(Boolean);
-
 app.use(
   "*",
   cors({
-    origin: allowedOrigins,
+    origin: [
+      "https://brainfish.richardeverley.com",
+      "https://llm-chat-starter-app.pages.dev/",
+    ],
     credentials: true,
-    allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowMethods: ["GET", "POST", "OPTIONS"],
     allowHeaders: [
       "Content-Type",
       "Authorization",
@@ -37,9 +33,7 @@ app.use(
 );
 
 // Explicit preflight handler for all routes
-app.options("*", (c) => {
-  return c.text("", 204);
-});
+app.options("*", (c) => c.text("", 204));
 
 // Routes
 app.get("/", (c) => c.json({ message: "LLM API is running" }));
