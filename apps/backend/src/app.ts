@@ -13,10 +13,17 @@ import * as MessageService from "./services/messageService.js";
 export const app = new Hono();
 
 // Middleware
+const allowedOrigins = [
+  process.env.FRONTEND_URL || "https://brainfish.richardeverley.com",
+  "http://localhost:5173",
+  "http://localhost:3000",
+  "https://llm-chat-starter-app.onrender.com",
+].filter(Boolean);
+
 app.use(
   cors({
-    origin: "*",
-    credentials: false,
+    origin: allowedOrigins,
+    credentials: true,
     allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowHeaders: [
       "Content-Type",
