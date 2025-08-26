@@ -42,7 +42,7 @@ export const useMessages = create<MessagesState>((set) => ({
     set({ isLoadingChats: true });
     try {
       const response = await fetch(
-        `https://llm-chat-starter-app.onrender.com/api/chats`
+        `${import.meta.env.VITE_BACKEND_API_URL}/api/chats`
       );
       if (response.ok) {
         const data = await response.json();
@@ -59,7 +59,7 @@ export const useMessages = create<MessagesState>((set) => ({
   loadChatMessages: async (chatId: string) => {
     try {
       const response = await fetch(
-        `https://llm-chat-starter-app.onrender.com/api/messages/${chatId}`
+        `${import.meta.env.VITE_BACKEND_API_URL}/api/messages/${chatId}`
       );
       if (response.ok) {
         const data = await response.json();
@@ -74,7 +74,7 @@ export const useMessages = create<MessagesState>((set) => ({
   refreshChatsAfterNewChat: async () => {
     try {
       const response = await fetch(
-        `https://llm-chat-starter-app.onrender.com/api/chats`
+        `${import.meta.env.VITE_BACKEND_API_URL}/api/chats`
       );
       if (response.ok) {
         const data = await response.json();
