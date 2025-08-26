@@ -21,6 +21,7 @@ const allowedOrigins = [
 ].filter(Boolean);
 
 app.use(
+  "*",
   cors({
     origin: allowedOrigins,
     credentials: true,
@@ -34,6 +35,11 @@ app.use(
     ],
   })
 );
+
+// Explicit preflight handler for all routes
+app.options("*", (c) => {
+  return c.text("", 204);
+});
 
 // Routes
 app.get("/", (c) => c.json({ message: "LLM API is running" }));
