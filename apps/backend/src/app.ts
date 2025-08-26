@@ -13,7 +13,12 @@ import * as MessageService from "./services/messageService.js";
 export const app = new Hono();
 
 // Middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+    credentials: false,
+  })
+);
 
 // Routes
 app.get("/", (c) => c.json({ message: "LLM API is running" }));
