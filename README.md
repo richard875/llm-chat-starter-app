@@ -2,6 +2,8 @@
 
 A modern full-stack chat application with React frontend, Hono backend, PostgreSQL database, and OpenAI GPT-4o mini integration.
 
+![Cover Image](https://raw.githubusercontent.com/richard875/llm-chat-starter-app/refs/heads/main/cover.jpg)
+
 ## Demo
 
 [![Demo Video](https://img.shields.io/badge/▶️-Watch%20Demo-blue?style=for-the-badge)](https://github.com/richard875/llm-chat-starter-app/raw/refs/heads/main/Demo.mp4)
